@@ -75,7 +75,7 @@
 * 아래 URL을 통해서 Seoul Region으로 접속합니다.
     > 참고) tenancy 명은 처음 Oracle Cloud Subscription 시에 지정합니다.
 
-    * https://console.ap-seoul-1.oraclecloud.com/?tenant=busanbank2019
+    * https://console.ap-seoul-1.oraclecloud.com/?tenant={tenant명}
 
     > 참고) 두 가지 로그인 타입이 있습니다. OCI 전용 계정이 있으며, IDCS라는 계정 관리를 위한 클라우드 서비스와 연동 (Single Sign On)해서 사용하는 계정이 있습니다.
 
@@ -89,7 +89,7 @@
 
     ![](images/oci-menu-oke.png)
 
-* OKE Cluster를 생성 할 Compartment를 선택합니다. (busanbank2019 > devops_workshop)
+* OKE Cluster를 생성 할 Compartment를 선택합니다. ({tenant명} > devops_workshop)
     > 참고) Compartment는 OCI에서 관리하는 리소스들을 그룹으로 묶어서 관리하기 위해 제공되는 기능입니다. 일반적으로 팀 단위로 리소스(Compute, Network, Storage등)를 관리하기 위한 목적으로 사용됩니다. Compartment 이름은 아래 스크린샷과 다를 수 있습니다.
 
     ![](images/oci-create-oke-cluster-compartment.png)
@@ -154,6 +154,7 @@
     ```
 
 * 설치 진행과정에서 oci-cli 설치 경로를 지정해 줍니다. 경로는 기본 경로(c:\Users\사용자명\, 이하 $HOME)에 설치해도 되지만, Windows의 경우 사용자명에 공백이 있으면 설치가 되지 않습니다. 사용자명에 공백이 있을 경우에는 다음과 같이 c:\oracle 경로에 설치합니다. (공백이 없으면 기본 경로에 설치)
+    **!!사용자명에 한글 이외의 다른 문자가 포함되어 있을 경우 Python 설치하면서 오류가 발생합니다. 이 경우 영문으로만 구성된 다른 사용자로 로그인합니다**
     ```
     1. c:\oracle\oci-cli
     2. c:\oracle\bin
@@ -329,7 +330,7 @@
         * Docker Username은 OCI 사용자 아이디입니다. OCI Console 우측 상단의 사람 아이콘을 클릭해서 확인할 수 있습니다. 여기에 Tenancy명이 필요합니다. 아래 Value는 예시이며, 보통 다음과 같이 구성됩니다.
 
         **Key:** DOCKER_USERNAME  
-        **Value:** busanbank2019/oracleidentitycloudservice/donghu.kim@oracle.com
+        **Value:** {tenant명}/oracleidentitycloudservice/donghu.kim@oracle.com
 
     4. DOCKER_REPO
         * Docker Repository이름으로 Tenancy명 + {레파지토리명}입니다. 다음과 같이 레파지토리 이름을 지정합니다.
@@ -337,7 +338,7 @@
         **!!! Repository는 Tenancy에서 공통으로 사용하기 때문에 각자 레파지토리 이름이 달라야 하므로, 영문 이니셜을 뒤에 붙입니다.**
 
         **Key:** DOCKER_REPO  
-        **Value:** busanbank2019/oracle-devops-workshop-{자신의 영문 이니셜}
+        **Value:** {tenant명}/oracle-devops-workshop-{자신의 영문 이니셜}
 
     5. KUBERNETES_MASTER는 $HOME/.kube/config 파일에서 얻을 수 있습니다. 해당 파일을 편집기로 열거나, **Windows Powershell**에서 **type config**로 출력해서 MASTER 서버 주소를 복사 후 입력합니다.
 
@@ -527,7 +528,7 @@
 
   
 ### **STEP 8**: Oracle Container Registry (OCIR) 확인 및 Oracle Kubernetes Engine (OKE) 에 생성(배포)된 Pod와 Service 확인하기
-* OCI에 접속 (https://console.ap-seoul-1.oraclecloud.com?tenant=busanbank2019) 후 좌측 **Developer Services** > **Registry (OCIR)** 클릭 합니다.
+* OCI에 접속 (https://console.ap-seoul-1.oraclecloud.com?tenant={tenant명}) 후 좌측 **Developer Services** > **Registry (OCIR)** 클릭 합니다.
     ![](images/oci-menu-ocir.png)
 
 * OCIR에 이미지가 등록되었습니다. 현재 Helidon(Microprofile)과 Spring Boot 서비스, 프론트엔드 UI 애플리케이션 이미지가 등록된 것을 확인할 수 있습니다.
