@@ -42,6 +42,9 @@ metadata:
   namespace: dhkim
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: helidon-movie-api-mp
   template:
     metadata:
       labels:
@@ -49,7 +52,7 @@ spec:
     spec:
       containers:
       - name: helidon-movie-api-mp
-        image: id4xyblf8enf/dhkim:master-6d3baf286284d41dbea9acfb071decc7214c7d46-helidon-movie-api-mp
+        image: id4xyblf8enf/dhkim:master-e10d1f0ecf356fb222d67e7de5b2077fab8caca2-helidon-movie-api-mp
         imagePullPolicy: Always
         ports:
         - name: http

@@ -553,13 +553,13 @@
 
   
 ### **STEP 8**: Oracle Container Registry (OCIR) 확인 및 Oracle Kubernetes Engine (OKE) 에 생성(배포)된 Pod와 Service 확인하기
-* OCI에 접속 (https://console.ap-seoul-1.oraclecloud.com?tenant={tenant명}) 후 좌측 **Developer Services** > **Registry (OCIR)** 클릭 합니다.
+* OCI에 접속 (https://console.ap-seoul-1.oraclecloud.com?tenant=skpadm) 후 좌측 **Developer Services** > **Registry (OCIR)** 클릭 합니다.
     ![](images/oci-menu-ocir.png)
 
 * OCIR에 이미지가 등록되었습니다. 현재 Helidon(Microprofile)과 Spring Boot 서비스, 프론트엔드 UI 애플리케이션 이미지가 등록된 것을 확인할 수 있습니다.
     ![](images/oci-ocir-repository-1.png)
 
-* Oracle Kubernetes Engine (OKE) 에 생성(배포)된 Pod와 Service 확인을 위해 **Windows PowerShell**을 열고 다음과 같이 명령어를 실행합니다.
+* Oracle Kubernetes Engine (OKE) 에 생성(배포)된 Pod와 Service 확인을 위해 **Windows PowerShell** 혹은 **macOS Terminal**을 열고 다음과 같이 명령어를 실행합니다.
 
     ```
     # kubectl get all
@@ -600,3 +600,5 @@ External IP로 변경한 후 맨 아래 Commit 버튼을 클릭합니다.
     **Movie detail with people**
     ![](images/jet-movie-detail-with-people.png)
     
+
+
