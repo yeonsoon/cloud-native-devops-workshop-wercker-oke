@@ -48,7 +48,7 @@ spec:
         - name: wercker
 ---
 kind: Service
-apiVersion: v1
+apiVersion: apps/v1
 metadata:
   namespace: <insert-namespace-name-here>
   name: helidon-movie-api-mp
