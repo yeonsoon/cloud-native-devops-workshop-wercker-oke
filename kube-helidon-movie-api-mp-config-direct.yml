@@ -30,16 +30,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-kind: Namespace
-apiVersion: v1
-metadata:
-  name: dhkim
----
 kind: Deployment
-apiVersion: apps/v1
+apiVersion: extensions/v1beta1
 metadata:
   name: helidon-movie-api-mp
-  namespace: dhkim
 spec:
   replicas: 1
   selector:
@@ -52,7 +46,7 @@ spec:
     spec:
       containers:
       - name: helidon-movie-api-mp
-        image: id4xyblf8enf/dhkim:master-e10d1f0ecf356fb222d67e7de5b2077fab8caca2-helidon-movie-api-mp
+        image: id4xyblf8enf/dhkim:master-f8e6f68967ca764ed0bf665473b4f9f4b63733e0-helidon-movie-api-mp
         imagePullPolicy: Always
         ports:
         - name: http
@@ -65,7 +59,6 @@ kind: Service
 apiVersion: v1
 metadata:
   name: helidon-movie-api-mp
-  namespace: dhkim
   labels:
     app: helidon-movie-api-mp
 spec:
