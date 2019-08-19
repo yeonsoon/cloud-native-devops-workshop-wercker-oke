@@ -75,7 +75,7 @@
 * 아래 URL을 통해서 Seoul Region으로 접속합니다.
     > 참고) tenancy 명은 처음 Oracle Cloud Subscription 시에 지정합니다.
 
-    * https://console.ap-seoul-1.oraclecloud.com/?tenant=skpadm
+    * https://console.us-ashburn-1.oraclecloud.com/?tenant=skpadm
 
     > 참고) 두 가지 로그인 타입이 있습니다. OCI 전용 계정이 있으며, IDCS라는 계정 관리를 위한 클라우드 서비스와 연동 (Single Sign On)해서 사용하는 계정이 있습니다.
 
@@ -207,7 +207,7 @@
         oci-cli 설치를 위해 필요하기 때문에 Tenancy OCID를 복사해서 메모합니다.
         ![](images/oci-get-tenancy-ocid-copy.png)
     3. Region  
-        여기서는 서울 리전을 사용합니다. (ap-seoul-1)
+        여기서는 애슈번(Ashburn) 리전을 사용합니다. (us-ashburn-1)
 
 * 위에서 얻은 정보를 사용해서 oci-cli 설정을 진행합니다. **Windows Powershell(관리자 모드)** 혹은 **macOS Terminal** 에서 다음과 같이 입력합니다.
     ```
@@ -559,7 +559,7 @@
 
   
 ### **STEP 8**: Oracle Container Registry (OCIR) 확인 및 Oracle Kubernetes Engine (OKE) 에 생성(배포)된 Pod와 Service 확인하기
-* OCI에 접속 (https://console.ap-seoul-1.oraclecloud.com?tenant=skpadm) 후 좌측 **Developer Services** > **Registry (OCIR)** 클릭 합니다.
+* OCI에 접속 (https://console.us-ashburn-1.oraclecloud.com?tenant=skpadm) 후 좌측 **Developer Services** > **Registry (OCIR)** 클릭 합니다.
     ![](images/oci-menu-ocir.png)
 
 * OCIR에 이미지가 등록되었습니다. 현재 Helidon(Microprofile)과 Spring Boot 서비스, 프론트엔드 UI 애플리케이션 이미지가 등록된 것을 확인할 수 있습니다.
