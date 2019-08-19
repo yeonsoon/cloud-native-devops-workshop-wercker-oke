@@ -380,6 +380,11 @@
         **Key:** KUBERNETES_AUTH_TOKEN  
         **Value:**: KUBERNETES AUTH TOKEN (예. LS0tLS1CRUdJTiBDRVJUSU................)
 
+    7. KUBERNETES_NAMESPACE를 사용하는 이유는 동일한 서비스를 여러 사람이 동일한 노드에 배포하기 때문에 각 Pod와 Deployment, Service를 각 사용자별로 생성하기 위함입니다. Kubernetes Cluster에 Namespace를 지정하여 Pod, Service, Deployment, Secret을 분리합니다. 
+    
+        **Key:** KUBERNETES_NAMESPACE  
+        **Value:**: 고유한 값 (예. dhkim9)
+
 * Wercker Application 환경 설정을 완료한 모습입니다.
     ![](images/wercker-env-completed.png)
 
@@ -390,25 +395,16 @@
     4개의 설정 파일은 다음과 같습니다.
     * wercker.yml
         * Wercker CI/CD의 Pipeline을 구성을 위한 설정 파일
+    
+    * kube-namespace-config.yaml.template
+        * Kubernetes의 Namespace를 생성합니다.
+
     * kube-helidon-movie-api-mp-config.yml.template
         * helidon-movie-api-mp 서비스를 Kubernetes 환경에 배포하기 위한 설정 파일
     * kube-springboot-movie-people-api-config.yml.template
         * springboot-movie-people-api 서비스를 Kubernetes 환경에 배포하기 위한 설정 파일
     * kube-jet-movie-msa-ui-config.yml.template
         * 프론트엔드 UI (Nodejs 기반)를 Kubernetes 환경에 배포하기 위한 설정 파일
-
-* [중요] 위 4개의 설정 파일을 열어서 namespace 부분을 수정합니다. 
-Git Repository에서 각 파일을 클릭한 후 우측 상단의 연필 아이콘을 클릭하여 수정합니다. **< insert-namespace-name-here>** 로 되어 있는 부분을 이름의 이니셜과 같은 고유한 이름으로 변경합니다. (예. dhkim-1)
-    > namespace를 사용하는 이유는 동일한 서비스를 여러 사람이 동일한 노드에 배포하기 때문에 각 Pod와 Deployment, Service를 각 사용자별로 생성하기 위함입니다.
-
-    우측 연필 아이콘 클릭
-    ![](images/github-kubernetes-yaml-edit.png)
-
-    < insert-namespace-name-here> 수정 (고유한 값으로 변경)
-    ![](images/github-kubernetes-yaml-namespace.png)
-
-    Commit 버튼 클릭하여 저장
-    ![](images/github-kubernetes-yaml-commit.png)
 
 * Git Repository에서 wercker.yml 파일을 클릭합니다. 다음과 같은 내용을 볼 수 있습니다. (내용이 길기 때문에 중요한 부분만 요약해서 설명합니다.)
     ```yml
