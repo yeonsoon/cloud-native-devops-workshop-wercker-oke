@@ -13,9 +13,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: ns1
 kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
+  namespace: ns1
   name: helidon-movie-api-mp
   labels:
     commit: ${WERCKER_GIT_COMMIT}
@@ -44,6 +49,7 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
+  namespace: ns1
   name: helidon-movie-api-mp
   labels:
     app: helidon-movie-api-mp
