@@ -49,10 +49,14 @@ spec:
     spec:
       containers:
       - name: helidon-movie-api-mp
-        image: id4xyblf8enf/dhkim/helidon-movie-api-mp:latest-helidon-movie-api-mp
-        imagePullPolicy: IfNotPresent
+        image: id4xyblf8enf/dhkim:master-6d3baf286284d41dbea9acfb071decc7214c7d46-helidon-movie-api-mp
+        imagePullPolicy: Always
         ports:
-        - containerPort: 8080
+        - name: http
+          containerPort: 8080
+          protocol: TCP
+      imagePullSecrets:
+        - name: wercker
 ---
 kind: Service
 apiVersion: v1
