@@ -324,6 +324,7 @@
     4. DOCKER_REPO
     5. KUBERNETES_MASTER
     6. KUBERNETES_AUTH_TOKEN
+    7. KUBERNETES_NAMESPACE
     
     > 여기서 KUBERNETES_MASTER와 KUBERNETES_AUTH_TOKEN은 $HOME/.kube/config (kubeconfig) 파일의 내용을 참조해서 설정합니다.
 
