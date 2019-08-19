@@ -13,16 +13,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-kind: Namespace
-apiVersion: v1
-metadata:
-  name: dhkim
----
 kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: jet-movie-msa-ui
-  namespace: dhkim
+  namespace: ${KUBERNETES_NAMESPACE}
   labels:
     commit: ${WERCKER_GIT_COMMIT}
 spec:
@@ -51,7 +46,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: jet-movie-msa-ui
-  namespace: dhkim
+  namespace: ${KUBERNETES_NAMESPACE}
   labels:
     app: jet-movie-msa-ui
     commit: ${WERCKER_GIT_COMMIT}
