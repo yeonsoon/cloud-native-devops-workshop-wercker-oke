@@ -606,4 +606,3 @@ External IP로 변경한 후 맨 아래 Commit 버튼을 클릭합니다.
     **Movie detail with people**
     ![](images/jet-movie-detail-with-people.png)
     
-
