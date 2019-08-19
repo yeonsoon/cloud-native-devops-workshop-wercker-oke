@@ -16,11 +16,12 @@
 kind: Namespace
 apiVersion: v1
 metadata:
-  name: ns1
+  name: <insert-namespace-name-here>
+---
 kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
-  namespace: ns1
+  namespace: <insert-namespace-name-here>
   name: helidon-movie-api-mp
   labels:
     commit: ${WERCKER_GIT_COMMIT}
@@ -49,7 +50,7 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  namespace: ns1
+  namespace: <insert-namespace-name-here>
   name: helidon-movie-api-mp
   labels:
     app: helidon-movie-api-mp
