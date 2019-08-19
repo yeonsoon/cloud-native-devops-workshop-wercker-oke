@@ -75,7 +75,7 @@
 * 아래 URL을 통해서 Seoul Region으로 접속합니다.
     > 참고) tenancy 명은 처음 Oracle Cloud Subscription 시에 지정합니다.
 
-    * https://console.ap-seoul-1.oraclecloud.com/?tenant={tenant명}
+    * https://console.ap-seoul-1.oraclecloud.com/?tenant=skpadm
 
     > 참고) 두 가지 로그인 타입이 있습니다. OCI 전용 계정이 있으며, IDCS라는 계정 관리를 위한 클라우드 서비스와 연동 (Single Sign On)해서 사용하는 계정이 있습니다.
 
@@ -89,7 +89,7 @@
 
     ![](images/oci-menu-oke.png)
 
-* OKE Cluster를 생성 할 Compartment를 선택합니다. ({tenant명} > devops_workshop)
+* OKE Cluster를 생성 할 Compartment를 선택합니다. (skpadm > OCI_OKE_class_190820)
     > 참고) Compartment는 OCI에서 관리하는 리소스들을 그룹으로 묶어서 관리하기 위해 제공되는 기능입니다. 일반적으로 팀 단위로 리소스(Compute, Network, Storage등)를 관리하기 위한 목적으로 사용됩니다. Compartment 이름은 아래 스크린샷과 다를 수 있습니다.
 
     ![](images/oci-create-oke-cluster-compartment.png)
@@ -227,14 +227,14 @@
     * Enter the location of your private key file:
         * **$HOME/.oci/oci_api_key.pem**
 
-* $HOME\\.oci 폴더와 그 안에 config 파일, SSH Key Pair(.pem)가 생성됩니다. oci-cli가 OCI에 접속할 수 있도록 생성된 공개키(oci_api_key_public.pem)를 OCI에 등록합니다.  
+* $HOME/.oci 폴더와 그 안에 config 파일, SSH Key Pair(.pem)가 생성됩니다. oci-cli가 OCI에 접속할 수 있도록 생성된 공개키(oci_api_key_public.pem)를 OCI에 등록합니다.  
 아래와 같이 우측 상단의 사용자 아이콘 클릭 후 사용자 아이디를 클릭 합니다.
     ![](images/oci-get-user-ocid.png)
 
 * 좌측 **API Keys** 메뉴 선택 후 **Add Public Key** 버튼 클릭합니다. **PUBLIC KEY** 영역에 위에서 생성한 키 중에서 oci_api_key_public.pem 파일의 내용을 복사해서 붙여넣기 한 후 **Add** 버튼을 클릭합니다.
     ![](images/oci-add-api-key.png)
 
-* oci-cli 설정이 완료되었습니다. 다음은 kubeconfig를 생성합니다. 먼저 **Windows PowerShell**을 통해서 다음과 같이 실행해서 oracle 폴더 하위에 .kube 폴더를 생성합니다.
+* oci-cli 설정이 완료되었습니다. 다음은 kubeconfig를 생성합니다. 먼저 **Windows PowerShell** 혹은 **macOS Terminal**을 통해서 다음과 같이 실행해서 oracle 폴더 하위에 .kube 폴더를 생성합니다.
     ```
     # cd $HOME
 
@@ -343,10 +343,10 @@
         ![](images/wercker-env-key1.png)
         
     2. DOCKER_REGISTRY
-        * 여기서는 서울 리전에 있는 Registry를 사용하도록 하겠습니다.
+        * 여기서는 애슈번(Ashburn) 리전에 있는 Registry를 사용하도록 하겠습니다.
 
         **Key:** DOCKER_REGISTRY  
-        **Value:** icn.ocir.io
+        **Value:** iad.ocir.io
 
         > Container Registry는 각 리전별로 존재합니다. Registry는 리전키 + ocir.io로 구성되는데, 리전키의 경우는 현재 icn(서울), nrt(도쿄), yyz(토론토), fra(프랑크푸르트), lhr(런던), iad(애쉬번), phx(피닉스)입니다. 
 
@@ -354,24 +354,25 @@
         * Docker Username은 OCI 사용자 아이디입니다. OCI Console 우측 상단의 사람 아이콘을 클릭해서 확인할 수 있습니다. 여기에 Tenancy명이 필요합니다. 아래 Value는 예시이며, 보통 다음과 같이 구성됩니다.
 
         **Key:** DOCKER_USERNAME  
-        **Value:** {tenant명}/oracleidentitycloudservice/donghu.kim@oracle.com
+        **Value:** skpadm/oracleidentitycloudservice/donghu.kim@oracle.com
 
     4. DOCKER_REPO
-        * Docker Repository이름으로 Tenancy명 + {레파지토리명}입니다. 다음과 같이 레파지토리 이름을 지정합니다.
+        * Docker Repository이름으로 {Tenancy의 Object Storage Namespace} + {레파지토리명}입니다. 다음과 같이 레파지토리 이름을 지정합니다. Tenancy의 Object Storage는 Tenancy 정보 페이지 하단에서 확인할 수 있습니다.
 
+        ![](images/oke-tenancy-object-storage-namespace.png)
         **!!! Repository는 Tenancy에서 공통으로 사용하기 때문에 각자 레파지토리 이름이 달라야 하므로, 영문 이니셜을 뒤에 붙입니다.**
 
         **Key:** DOCKER_REPO  
-        **Value:** {tenant명}/oracle-devops-workshop-{자신의 영문 이니셜}
+        **Value:** id4xyblf8enf/oracle-oke-workshop-{자신의 영문 이니셜}
 
-    5. KUBERNETES_MASTER는 $HOME/.kube/config 파일에서 얻을 수 있습니다. 해당 파일을 편집기로 열거나, **Windows Powershell**에서 **type config**로 출력해서 MASTER 서버 주소를 복사 후 입력합니다.
+    5. KUBERNETES_MASTER는 $HOME/.kube/config 파일에서 얻을 수 있습니다. 해당 파일을 편집기등으로 오픈한 후 MASTER 서버 주소를 복사 후 입력합니다.
 
         ![](images/oci-oke-kubeconfig-master-server.png)
   
         **Key:** KUBERNETES_MASTER  
         **Value:**: KUBERNETES SERVER MASTER URL (예. https://c3donjwgqzd.ap-seoul-1.clusters.oci.oraclecloud.com:6443)
 
-    6. KUBERNETES_AUTH_TOKEN도 마찬가지로 .kube/config 파일에서 얻을 수 있습니다. 해당 파일을 편집기로 열거나, **Windows Powershell**에서 **type config**로 출력해서 AUTH TOKEN을 복사해서 입력합니다.
+    6. KUBERNETES_AUTH_TOKEN도 마찬가지로 .kube/config 파일에서 얻을 수 있습니다. 해당 파일을 편집기등으로 오픈한 후 AUTH TOKEN을 복사해서 입력합니다.
 
         ![](images/oci-oke-kubeconfig-auth-token.png)
 
