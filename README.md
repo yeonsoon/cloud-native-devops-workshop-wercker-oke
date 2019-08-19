@@ -101,8 +101,8 @@
 * 다음과 같이 입력합니다. Virtual Machine Gen2, 1 OCPU에 생성된 네트워크 서브넷당 한개의 쿠버네티스 노드를 생성합니다.
     > 참고) Compute Shape의 의미는 다음과 같습니다. VM.Standard2.2은 Virtual Machine Gen2, 2 OCPU를 의미합니다.
     
-    * NAME: oke-cluster-{이름 영문 이니셜}-1 (예. oke-cluster-dhk-1)
-    * KUBERNETES VERSION: v1.12.7
+    * NAME: oke-cluster-{번호} (예. oke-cluster-dhk-1)
+    * KUBERNETES VERSION: v1.13.5
     * QUICK CREATE: CHECK
     * SHAPE: VM.Standard2.2
     * QUANTITY PER SUBNET: 1
@@ -117,15 +117,32 @@
   **ACTIVE 상태의 노드**  
     <img src="images/oci-created-oke-cluster.png" width="50%">
 
-### **STEP 3**: kubectl과 oci-cli 설치하기
-* **Oracle Kubernetes Engine**과 **Oracle Cloud Infrastructure** 관리, 컨트롤하기 위한 CLI (Command Line Tool)인 kubectl과 oci-cli 설치를 합니다. kubectl은 curl을 통해서 다운로드 받을 수 있지만, 아래 링크를 통해서도 다운로드 받을 수 있습니다. c:\oracle 폴더를 만들고 하위에 다운로드 받습니다.
+### **STEP 3**: oci-cli와 kubectl 설치하기
+* **Oracle Kubernetes Engine**과 **Oracle Cloud Infrastructure** 관리, 컨트롤하기 위한 CLI (Command Line Tool)인 kubectl과 oci-cli 설치를 합니다. kubectl은 curl을 통해서 다운로드 받을 수 있지만, 아래 링크를 통해서도 다운로드 받을 수 있습니다.
 
-    https://objectstorage.ap-seoul-1.oraclecloud.com/p/4XtmAEN_tm_kBuVAhWolpal_nkZyIelvgpa5ctqyKFI/n/cnaalj48pxik/b/bucket-20190707-2121/o/kubectl.exe
+* kubectl 설치
+    > 공식 설치 가이드는 다음 페이지를 참고합니다.  
+    > https://kubernetes.io/docs/tasks/tools/install-kubectl/
 
-    > 참고) kubectl 직접 설치를 하고 싶으면 아래 curl 명령어를 통해 설치 가능합니다. 다만, curl 명령어는 Windows Prompt (cmd)에서 실행 합니다. (PowerShell 에서는 옵션이 다름)
-    > ```
-    > curl -LO https://storage.googleapis.com/kubernetes-release/> release/v1.15.0/bin/windows/amd64/kubectl.exe
-    > ```
+    * Windows
+        > ```
+        > curl -LO https://storage.googleapis.com/kubernetes-release/> release/v1.15.0/bin/windows/amd64/kubectl.exe
+        > ```
+
+    * macOS (homebrew)
+        > ```
+        > brew install kubernetes-cli
+        > ```
+
+    * macOS (curl)
+        > ```
+        > curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/darwin/amd64/kubectl
+        > ```
+    
+    * 설치 버전 확인
+        > ```
+        > kubectl version
+        > ```
 
 * 클라이언트에서 OKE 접속을 위한 kubeconfig 파일을 만드는 과정입니다. kubeconfig 파일 생성하는 과정은 OCI의 OKE Cluster 화면에서 Access **Kubeconfig** 버튼을 클릭하면 확인할 수 있습니다.
 
@@ -137,35 +154,42 @@
 
     **!!! 위 내용은 oci-cli 설치 후 실행할 내용이므로 메모합니다.**
 
-* kubeconfig 파일 생성을 위해서 우선 **oci-cli** 설치를 진행합니다. 먼저, Windows 좌측 하단의 검색 버튼을 클릭하고 **PowerShell**을 입력한 후 **Windows PowerShell**을 관리자 모드(중요)로 실행합니다.
+* kubeconfig 파일 생성을 위해서 우선 **oci-cli** 설치를 진행합니다. Windows 사용자는 Windows 좌측 하단의 검색 버튼을 클릭하고 **PowerShell**을 입력한 후 **Windows PowerShell**을 관리자 모드(중요)로 실행합니다.
 
     <img src="images/windows-search-powershell.png" width="50%">
 
     ![](images/windows-powershell.png)
 
-
-* **Windows PowerShell**에서 다음과 같이 실행하여 oci-cli를 설치합니다.
-
+* **Windows PowerShell** 또는 **macOS Terminal**에서 다음과 같이 실행하여 oci-cli를 설치합니다.
     > oci-cli 설치를 위해 Python이 자동으로 설치됩니다.
-    ```
-    # Set-ExecutionPolicy RemoteSigned
 
-    # powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.ps1'))"
-    ```
+    > 공식 설치 가이드는 다음 페이지를 참고합니다.  
+    > https://docs.cloud.oracle.com/iaas/Content/API/SDKDocs/cliinstall.htm
 
-* 설치 진행과정에서 oci-cli 설치 경로를 지정해 줍니다. 경로는 기본 경로(c:\Users\사용자명\, 이하 $HOME)에 설치해도 되지만, Windows의 경우 사용자명에 공백이 있으면 설치가 되지 않습니다. 사용자명에 공백이 있을 경우에는 다음과 같이 c:\oracle 경로에 설치합니다. (공백이 없으면 기본 경로에 설치)
-    **!!사용자명에 한글 이외의 다른 문자가 포함되어 있을 경우 Python 설치하면서 오류가 발생합니다. 이 경우 영문으로만 구성된 다른 사용자로 로그인합니다**
+    * Windows
+        
+        ```
+        # Set-ExecutionPolicy RemoteSigned
+
+        # powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.ps1'))"
+        ```
+    
+    * macOS
+        ```
+        # bash -c "$(curl -L https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh)"
+        ```
+
+* 설치 진행과정에서 oci-cli 설치 경로를 지정해 줍니다. 기본 경로는 $HOME(/Users/사용자명) 입니다. 기본 경로에 설치합니다.
+
+    > **!!Windows의 경우 사용자명에 한글 혹은 공백이 포함되어 있을 경우 Python을 설치하면서 오류가 발생합니다. 이 경우 영문으로만 구성된 다른 사용자로 진행합니다.**
     ```
-    1. c:\oracle\oci-cli
-    2. c:\oracle\bin
-    3. c:\oracle\bin\oci-cli-scripts
+    1. $HOME/oci-cli
+    2. $HOME/bin
+    3. $HOME/bin/oci-cli-scripts
     4. 추가 패키지 설치 여부 (설치 없이 엔터 치고 넘어갑니다)
     ```
 
-* 설치가 완료되면 **PowerShell** 에서 oci-cli 설치를 확인합니다.
-
-    > 참고) 명령어 실행이 안되면 **PowerShell** 을 종료 후 다시 시작합니다(관리자 모드) 
-
+* 설치가 완료되면 oci-cli 설치를 확인합니다.
     ```
     # oci -v
     ```
@@ -185,23 +209,23 @@
     3. Region  
         여기서는 서울 리전을 사용합니다. (ap-seoul-1)
 
-* 위에서 얻은 정보를 사용해서 oci-cli 설정을 진행합니다. **Windows Powershell(관리자 모드)** 에서 다음과 같이 입력합니다.
+* 위에서 얻은 정보를 사용해서 oci-cli 설정을 진행합니다. **Windows Powershell(관리자 모드)** 혹은 **macOS Terminal** 에서 다음과 같이 입력합니다.
     ```
     # oci setup config
     ```
 
     * Enter a location for your config
-        * **Enter (그냥 Enter 치면 $HOME\\.oci 폴더가 기본 폴더로 설정됩니다)**
+        * **Enter (그냥 Enter 치면 $HOME/.oci 폴더가 기본 폴더로 설정됩니다)**
     * Enter a user OCID
-        * **위에서 얻은 자신의 User OCID**
+        * **자신의 User OCID**
     * Enter a tenancy OCID
-        * **위에서 얻은 Tenancy OCID**
+        * **Tenancy OCID**
     * Enter a region
-        * **ap-seoul-1**
+        * **us-ashburn-1**
     * Do you want to generate a new RSA key pair? (SSH Key Pair가 생성됨, 다음 단계에서 OCI에 Public 키를 등록해줌)
         * **y**
     * Enter the location of your private key file:
-        * **$HOME\\.oci\oci_api_key.pem**
+        * **$HOME/.oci/oci_api_key.pem**
 
 * $HOME\\.oci 폴더와 그 안에 config 파일, SSH Key Pair(.pem)가 생성됩니다. oci-cli가 OCI에 접속할 수 있도록 생성된 공개키(oci_api_key_public.pem)를 OCI에 등록합니다.  
 아래와 같이 우측 상단의 사용자 아이콘 클릭 후 사용자 아이디를 클릭 합니다.
