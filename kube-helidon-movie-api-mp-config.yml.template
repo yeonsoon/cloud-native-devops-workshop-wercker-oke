@@ -21,7 +21,6 @@ metadata:
 kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
-  namespace: <insert-namespace-name-here>
   name: helidon-movie-api-mp
   namespace: <insert-namespace-name-here>
   labels:
@@ -51,7 +50,6 @@ spec:
 kind: Service
 apiVersion: apps/v1
 metadata:
-  namespace: <insert-namespace-name-here>
   name: helidon-movie-api-mp
   namespace: <insert-namespace-name-here>
   labels:
