@@ -397,7 +397,7 @@
         * Wercker CI/CD의 Pipeline을 구성을 위한 설정 파일
     
     * kube-namespace-config.yaml.template
-        * Kubernetes의 Namespace를 생성합니다.
+        * Kubernetes에 Namespace를 생성합니다.
 
     * kube-helidon-movie-api-mp-config.yml.template
         * helidon-movie-api-mp 서비스를 Kubernetes 환경에 배포하기 위한 설정 파일
@@ -449,7 +449,11 @@
 
       steps:
       - bash-template
-        
+      
+      - kubectl:
+        name: create namespace
+        ... Kubernetes에 Namespace를 생성합니다.
+
       - kubectl:
           name: delete secret
           ... Wercker에서 Docker Registry 접속을 위한 Secret이 존재할 경우 삭제
@@ -568,10 +572,10 @@
 * OCIR에 이미지가 등록되었습니다. 현재 Helidon(Microprofile)과 Spring Boot 서비스, 프론트엔드 UI 애플리케이션 이미지가 등록된 것을 확인할 수 있습니다.
     ![](images/oci-ocir-repository-1.png)
 
-* Oracle Kubernetes Engine (OKE) 에 생성(배포)된 Pod와 Service 확인을 위해 **Windows PowerShell** 혹은 **macOS Terminal**을 열고 다음과 같이 명령어를 실행합니다. **<insert-namespace-name-here >** 부분은 위에서 사용한 이름을 사용합니다.
+* Oracle Kubernetes Engine (OKE) 에 생성(배포)된 Pod와 Service 확인을 위해 **Windows PowerShell** 혹은 **macOS Terminal**을 열고 다음과 같이 명령어를 실행합니다. **KUBERNETES_NAMESPACE** 부분은 위에서 사용한 이름을 사용합니다.
 
     ```
-    # kubectl get all --namespace=<insert-namespace-name-here>
+    # kubectl get all -n = ${KUBERNETES_NAMESPACE}
     ```
 
 * 다음과 같이 **Running**상태의 세 개의 서비스와 서비스의 **External IP**를 확인할 수 있습니다.
