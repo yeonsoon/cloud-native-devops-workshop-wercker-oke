@@ -396,12 +396,11 @@
     * kube-jet-movie-msa-ui-config.yml.template
         * 프론트엔드 UI (Nodejs 기반)를 Kubernetes 환경에 배포하기 위한 설정 파일
 
-* 다음 kubernetes yaml 파일의 내용 중 namespace를 수정합니다. 아래 3개의 파일을 열어서 **<insert-namespace-name-here>** 부분을 고유한 이름으로 변경합니다. (예. dhkim1)
+* [중요] 위 4개의 설정 파일을 열어서 namespace 부분을 수정합니다. 
+Git Repository에서 각 파일을 클릭한 후 우측 상단의 연필 아이콘을 클릭하여 수정합니다. **<insert-namespace-name-here>** 로 되어 있는 부분을 이름의 이니셜과 같은 고유한 이름으로 변경합니다. (예. dhkim-1)
     > namespace를 사용하는 이유는 동일한 서비스를 여러 사람이 동일한 노드에 배포하기 때문에 각 Pod와 Deployment, Service를 각 사용자별로 생성하기 위함입니다.
 
-    * kube-helidon-movie-api-mp-config.yml.template
-    * kube-springboot-movie-people-api-config.yml.template
-    * kube-jet-movie-msa-ui-config.yml.template
+    
 
 * Git Repository에서 wercker.yml 파일을 클릭합니다. 다음과 같은 내용을 볼 수 있습니다. (내용이 길기 때문에 중요한 부분만 요약해서 설명합니다.)
     ```yml
@@ -605,4 +604,5 @@ External IP로 변경한 후 맨 아래 Commit 버튼을 클릭합니다.
 
     **Movie detail with people**
     ![](images/jet-movie-detail-with-people.png)
+    
     

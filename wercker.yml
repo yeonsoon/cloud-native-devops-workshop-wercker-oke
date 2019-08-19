@@ -78,14 +78,14 @@ deploy-to-cluster:
         server: $KUBERNETES_MASTER
         token: $KUBERNETES_AUTH_TOKEN
         insecure-skip-tls-verify: true
-        command: delete secret wercker --namespace=dhkim; echo delete registry secret
+        command: delete secret wercker --namespace=<insert-namespace-name-here>; echo delete registry secret
 
     - kubectl:
         name: create secret
         server: $KUBERNETES_MASTER
         token: $KUBERNETES_AUTH_TOKEN
         insecure-skip-tls-verify: true
-        command: create secret docker-registry wercker --docker-server=$DOCKER_REGISTRY --docker-email=nobody@oracle.com --docker-username=$DOCKER_USERNAME --docker-password='$OCI_AUTH_TOKEN' --namespace=dhkim; echo delete registry secret
+        command: create secret docker-registry wercker --docker-server=$DOCKER_REGISTRY --docker-email=nobody@oracle.com --docker-username=$DOCKER_USERNAME --docker-password='$OCI_AUTH_TOKEN' --namespace=<insert-namespace-name-here>; echo delete registry secret
 
     - script:
         name: "Visualise Kubernetes config"
