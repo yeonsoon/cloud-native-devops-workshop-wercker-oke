@@ -383,9 +383,8 @@
     ![](images/wercker-env-completed.png)
 
 ### **STEP 6**: Wercker CI/CD 파이프라인 구성하기
-> 참고) 이미 설정이 완료된 파일이므로, 내용만 확인합니다.
 
-* 자신의 Git Repository (cloud-native-devops-workshop-wercker-oke)에 접속하면 처음에 생성 시 가져온 파일 중에서 다음 3개의 설정 파일을 확인할 수 있습니다.
+* 복제한 Git Repository (cloud-native-devops-workshop-wercker-oke)에 접속하면 처음에 생성 시 가져온 파일 중에서 다음 4개의 설정 파일을 확인할 수 있습니다.
 
     4개의 설정 파일은 다음과 같습니다.
     * wercker.yml
@@ -396,6 +395,13 @@
         * springboot-movie-people-api 서비스를 Kubernetes 환경에 배포하기 위한 설정 파일
     * kube-jet-movie-msa-ui-config.yml.template
         * 프론트엔드 UI (Nodejs 기반)를 Kubernetes 환경에 배포하기 위한 설정 파일
+
+* 다음 kubernetes yaml 파일의 내용 중 namespace를 수정합니다. 아래 3개의 파일을 열어서 **<insert-namespace-name-here>** 부분을 고유한 이름으로 변경합니다. (예. dhkim1)
+    > namespace를 사용하는 이유는 동일한 서비스를 여러 사람이 동일한 노드에 배포하기 때문에 각 Pod와 Deployment, Service를 각 사용자별로 생성하기 위함입니다.
+
+    * kube-helidon-movie-api-mp-config.yml.template
+    * kube-springboot-movie-people-api-config.yml.template
+    * kube-jet-movie-msa-ui-config.yml.template
 
 * Git Repository에서 wercker.yml 파일을 클릭합니다. 다음과 같은 내용을 볼 수 있습니다. (내용이 길기 때문에 중요한 부분만 요약해서 설명합니다.)
     ```yml
