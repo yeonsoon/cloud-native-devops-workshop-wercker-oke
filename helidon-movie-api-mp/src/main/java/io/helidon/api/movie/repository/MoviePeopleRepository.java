@@ -39,44 +39,44 @@ public class MoviePeopleRepository {
     public List<MoviePeople> searchMoviePeople(String filmography) {
         List<MoviePeople> moviePeopleArray = new ArrayList<MoviePeople>();
         String clause = "";
-        if(!filmography.equals(""))
-        clause = "WHERE FILMOGRAPHY LIKE '%' || ? || '%'";
-        
+        if (!filmography.equals(""))
+            clause = "WHERE FILMOGRAPHY LIKE '%' || ? || '%'";
+
         StringBuffer queryBuffer = new StringBuffer();
         queryBuffer.append("SELECT * FROM MOVIE_PEOPLE " + clause + " ORDER BY ID DESC");
-        
+
         Connection conn = null;
         try {
             conn = this.dataSource.getConnection();
-            
+
             PreparedStatement ps = conn.prepareStatement(queryBuffer.toString());
 
-            if(!filmography.equals(""))
+            if (!filmography.equals(""))
                 ps.setString(1, filmography);
 
             ResultSet rs = ps.executeQuery();
 
-            while(rs.next()) {
+            while (rs.next()) {
                 MoviePeople moviePeople = new MoviePeople();
                 moviePeople.setId(rs.getInt("id"));
                 moviePeople.setName(Optional.ofNullable(rs.getString("name")).orElse(""));
                 moviePeople.setRole(Optional.ofNullable(rs.getString("role")).orElse(""));
                 moviePeople.setFilmography(Optional.ofNullable(rs.getString("filmography")).orElse(""));
-                
+
                 moviePeopleArray.add(moviePeople);
             }
 
             conn.close();
-            
+
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try {
-                conn.close();
-            } catch (SQLException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+            if (conn != null)
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
         }
 
         return moviePeopleArray;
@@ -85,14 +85,15 @@ public class MoviePeopleRepository {
     public MoviePeople findMoviePeopleByid(int id) {
         MoviePeople moviePeople = new MoviePeople();
 
+        Connection conn = null;
         try {
-            Connection conn = this.dataSource.getConnection();
+            conn = this.dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement("SELECT * FROM MOVIE_PEOPLE WHERE ID = ?");
 
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
 
-            if(rs.next()) {
+            if (rs.next()) {
                 moviePeople.setId(rs.getInt("id"));
                 moviePeople.setName(Optional.ofNullable(rs.getString("name")).orElse(""));
                 moviePeople.setRole(Optional.ofNullable(rs.getString("role")).orElse(""));
@@ -100,6 +101,13 @@ public class MoviePeopleRepository {
 
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            if (conn != null)
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
         }
 
         return moviePeople;
