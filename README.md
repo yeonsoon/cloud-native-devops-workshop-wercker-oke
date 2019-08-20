@@ -126,7 +126,8 @@
 
     * Windows
         > ```
-        > curl -LO https://storage.googleapis.com/kubernetes-release/> release/v1.15.0/bin/windows/amd64/kubectl.exe
+        > curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.15.0/bin/windows/amd64/kubectl.exe
+
         > ```
 
     * macOS (homebrew)
