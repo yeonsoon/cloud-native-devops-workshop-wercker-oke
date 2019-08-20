@@ -575,7 +575,7 @@
 * Oracle Kubernetes Engine (OKE) 에 생성(배포)된 Pod와 Service 확인을 위해 **Windows PowerShell** 혹은 **macOS Terminal**을 열고 다음과 같이 명령어를 실행합니다. **KUBERNETES_NAMESPACE** 부분은 위에서 사용한 이름을 사용합니다.
 
     ```
-    # kubectl get all -n = ${KUBERNETES_NAMESPACE}
+    # kubectl get all -n ${KUBERNETES_NAMESPACE}
     ```
 
 * 다음과 같이 **Running**상태의 세 개의 서비스와 서비스의 **External IP**를 확인할 수 있습니다.
@@ -613,3 +613,65 @@ External IP로 변경한 후 맨 아래 Commit 버튼을 클릭합니다.
     **Movie detail with people**
     ![](images/jet-movie-detail-with-people.png)
     
+### **쿠버네티스 명령어** 
+* Kubernetes Dashboard
+    ```
+    # kubectl proxy
+    ```
+
+    다음 주소로 접속합니다.
+    ```
+    http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/login
+    ```
+
+    첫 화면에서 kubeconfig 파일을 선택 후 로그인합니다. ($HOME/.kube/config)
+
+* 클러스터 정보
+    ```
+    # kubectl cluster-info
+    ```
+
+* 노드 정보
+    ```
+    # kubectl get nodes
+    ```
+    
+* 모든 리소스 출력
+    ```
+    # kubectl get all -A
+    ```
+
+* 특정 네임스페이스의 리소스 출력
+    ```
+    # kubectl get all -n 네임스페이스명(dhkim9)
+    ```
+
+* 특정 Pod의 상세 정보 (네임스페이스를 지정한 경우 -n 옵션 사용)
+    ```
+    # kubectl describe Pod명 -n 네임스페이스명(dhkim9)
+    ```
+
+* 특정 Pod 내부 접속 (네임스페이스를 지정한 경우 -n 옵션 사용)
+    ```
+    # kubectl exec -it Pod명 -n 네임스페이스명(dhkim9) -- /bin/bash
+    ```
+
+* 해당 네임스페이스를 갖는 모든 리소스 삭제
+    ```
+    # kubectl delete namespace 네임스페이스명(dhkim9)
+    ```
+
+* 특정 label 이름이 정의된 pod, service들 제거
+    ```
+    # kubectl delete pods,services -l name=label이름
+    ```
+
+* Pod의 로그 조회 (네임스페이스를 지정한 경우 -n 옵션 사용, -f 옵션은 tail)
+    ```
+    # kubectl logs -f Pod명 -n 네임스페이스명(dhkim9)
+    ```
+
+* Pod 스케일링 (네임스페이스를 지정한 경우 -n 옵션 사용)
+    ```
+    # kubectl scale Replica Set명 -n 네임스페이스명(dhkim9) --replicas=5
+    ```
