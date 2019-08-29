@@ -1,7 +1,7 @@
 # Cloud Native DevOps Hands-On Workshop - Wercker and OKE (Oracle Kubernetes Engine)
 
 ![](images/header.png)
-
+ 
 ## Introduction
 본 핸즈온 문서는 마이크로 서비스 애플리케이션에 대한 빌드/테스트/배포 자동화를 위한 CI/CD 파이프라인을 구성하고, 이를 관리형 쿠버네티스 서비스에 배포하는 전반적인 과정을 다루고 있습니다. 본 워크샵을 통해서 오라클의 컨테이너 기반 CI/CD 서비스인 Wercker(워커)와 오라클의 컨테이너 서비스인 Oracle Kubernetes Engine (OKE) 및 Oracle Container Registry Service에 대한 경험을 해볼 수 있습니다. 
 
