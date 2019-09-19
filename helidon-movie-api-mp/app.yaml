@@ -35,7 +35,7 @@ metadata:
   name: helidon-movie-api-mp
 spec:
   replicas: 1
-  template:
+  template:p
     metadata:
       labels:
         app: helidon-movie-api-mp
