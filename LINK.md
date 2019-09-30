@@ -23,11 +23,6 @@ https://raw.githubusercontent.com/MangDan/cloud-native-devops-workshop-wercker-o
 https://raw.githubusercontent.com/MangDan/cloud-native-devops-workshop-wercker-oke/master/sshkey/id_rsa
 ```
 
-### SSH OpenSSH 개인키(Private Key)
-```
-https://raw.githubusercontent.com/MangDan/cloud-native-devops-workshop-wercker-oke/master/sshkey/id_rsa
-```
-
 ### 도커 설치
 ```
 # 도커 설치
