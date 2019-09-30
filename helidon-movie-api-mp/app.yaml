@@ -17,7 +17,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: movie-api-service-1
-  namespace: dankim-ns1
+  namespace: <namespace>
   labels:
     app: movie-api-service
 spec:
@@ -34,7 +34,7 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   name: movie-api-service
-  namespace: dankim-ns1
+  namespace: <namespace>
 spec:
   replicas: 2
   selector: 
