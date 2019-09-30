@@ -13,11 +13,6 @@ https://console.ap-seoul-1.oraclecloud.com/?tenant=<각 회사별 테넌트명>&
 https://raw.githubusercontent.com/MangDan/cloud-native-devops-workshop-wercker-oke/master/sshkey/id_rsa.pub
 ```
 
-### SSH 공개키(Public Key)
-```
-https://raw.githubusercontent.com/MangDan/cloud-native-devops-workshop-wercker-oke/master/sshkey/id_rsa.pub
-```
-
 ### SSH Putty 개인키(Private Key)
 ```
 https://raw.githubusercontent.com/MangDan/cloud-native-devops-workshop-wercker-oke/master/sshkey/id_rsa.ppk
