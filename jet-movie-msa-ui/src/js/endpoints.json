@@ -1,5 +1,5 @@
 {
-    "movies": "http://132.145.86.244:30000/api/search/v1/movies",
-    "moviepeople": "http://132.145.87.85:31000/moviepeople",
+    "movies": "http://<helidon-movie-api-mp 서비스의 IP>:30000/api/search/v1/movies",
+    "moviepeople": "http://<springboot-movie-people-api 서비스의 IP>:31000/moviepeople",
     "image": "https://image.tmdb.org/t/p/w185"
 }
